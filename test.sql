@@ -1,0 +1,1 @@
+INSERT INTO userIn (userId, unamefirst, userInunamelast) VALUES (1000, 'Kayla', 'N.');

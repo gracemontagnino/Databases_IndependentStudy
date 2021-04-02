@@ -229,7 +229,7 @@ def gen_users(num, start):
         lastName = random.choice(['A.', 'B.', 'C.', 'D.', 'E.', 'F.', 'G.', 'H.', 'I.', 'J.', 'K.',
                                   'L.', 'M.', 'N.', 'O.', 'P.', 'Q.', 'R.', 'S.', 'T.', 'U.', 'V.',
                                   'W.', 'X.', 'Y.', 'Z.'])
-        print(f"INSERT INTO user_in (userId, firstName, lastName) VALUES ({start + i}, '{firstName}', '{lastName}')")
+        print(f"INSERT INTO userIn (userID, unameFirst, unameLast) VALUES ({start + i}, '{firstName}', '{lastName}');")
 
 
 if __name__ == '__main__':

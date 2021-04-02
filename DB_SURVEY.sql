@@ -1,29 +1,32 @@
-CREATE TABLE userIn
+use new_surveys;
+CREATE TABLE IF NOT EXISTS userIn
 	(unameFirst VARCHAR(30),
 	 unameLast VARCHAR(30),
      userID SMALLINT NOT NULL PRIMARY KEY);
-CREATE TABLE survey
+CREATE TABLE IF NOT EXISTS survey
 	(sname VARCHAR(20) NOT NULL PRIMARY KEY,
      created DATETIME NOT NULL);
-CREATE TABLE question
+CREATE TABLE IF NOT EXISTS question
 	(label VARCHAR(30) NOT NULL PRIMARY KEY,
      ordinal SMALLINT NOT NULL,
+     sname VARCHAR(20) NOT NULL,
      FOREIGN KEY (sname) REFERENCES survey (sname));
-CREATE TABLE wasGiven
+CREATE TABLE IF NOT EXISTS wasGiven
 	(
-    uname VARCHAR(15) NOT NULL,
+    userID SMALLINT NOT NULL,
     sname VARCHAR(20) NOT NULL,
     completed DATETIME,
-    PRIMARY KEY (uname, sname),
-    FOREIGN KEY (uname) REFERENCES userIn (uname),
+    PRIMARY KEY (userID, sname),
+    FOREIGN KEY (userID) REFERENCES userIn (userID),
     FOREIGN KEY (sname) REFERENCES survey (sname)
     );
-CREATE TABLE responded
+CREATE TABLE IF NOT EXISTS responded
 	(
-    uname VARCHAR(15) NOT NULL,
+    userID SMALLINT NOT NULL,
     label VARCHAR(30) NOT NULL,
     scaleValUserIn SMALLINT NOT NULL,
-    PRIMARY KEY (uname, label),
-    FOREIGN KEY (uname) REFERENCES userIn (uname),
+    PRIMARY KEY (userID, label),
+    FOREIGN KEY (userID) REFERENCES userIn (userID),
     FOREIGN KEY (label) REFERENCES question (label)
     );
+

@@ -59,24 +59,24 @@ def gen_survey(sname, questions, date, usersStart, usersEnd):
     Create a new survey with associated questions
     and insert responses for all users with IDs in `users`
     '''
-    print(f"INSERT INTO survey (sName, created) VALUES ('{sname}', '{date.strftime(TIMESTAMP_FORMAT)}')")
+    print(f"INSERT INTO survey (sname, created) VALUES ('{sname}', '{date.strftime(TIMESTAMP_FORMAT)}');")
     for (i, q) in enumerate(questions):
-        print(f"INSERT INTO question (label, ordinal) VALUES ('{q}', {i + 1})")
-        print(f"INSERT INTO hasquestion (sname, label) VALUES ('{sname}', '{q}')")
+        print(f"INSERT INTO question (label, ordinal, sname) VALUES ('{q}', {i + 1},'{sname}');")
+        #print(f"INSERT INTO question (sname, label) VALUES ('{sname}', '{q}');")
 
     for userId in range(usersStart, usersEnd + 1):
         # 70% chance of completion
         if random.randint(1, 10) < 8:
             time_spent = datetime.timedelta(days=random.randint(0, 10), seconds=random.randint(0, 3600 * 24))
             completed = date + time_spent
-            print(f"INSERT INTO wasgiven (userId, sName, completed) VALUES ({userId}, '{sname}', '{completed.strftime(TIMESTAMP_FORMAT)}')")
+            print(f"INSERT INTO wasGiven (userID, sname, completed) VALUES ({userId}, '{sname}', '{completed.strftime(TIMESTAMP_FORMAT)}');")
             skew = random.randint(-1, 2)
             for q in questions:
                 # random choice of 1-5, adjusted for skew (which favors positives), constrained between 1 and 5
                 feedback = max(min(random.randint(1, 5) + skew, 5), 1)
-                print(f"INSERT INTO responded (userId, label, scale_val_user_in) VALUES ({userId}, '{q}', {feedback})")
+                print(f"INSERT INTO responded (userID, label, scaleValUserIn) VALUES ({userId}, '{q}', {feedback});")
         else:
-            print(f"INSERT INTO wasgiven (userId, sName, completed) VALUES ({userId}, '{sname}', NULL)")
+            print(f"INSERT INTO wasGiven (userID, sname, completed) VALUES ({userId}, '{sname}', NULL);")
             
     
 if __name__ == '__main__':
